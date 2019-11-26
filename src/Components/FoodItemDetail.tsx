@@ -12,7 +12,9 @@ class FoodItemDetail extends React.Component<FoodItemDetailProps> {
                 <div>
                     Name: {this.props.item.name} <br />
                     Added by user: {this.props.item.addedByUser} <br />
-                    Completed <input type="checkbox" checked={this.props.item.completed} />
+                    Completed <input type="checkbox" 
+                                     checked={this.props.item.completed} 
+                                     readOnly/>
                 </div>
             )
         } else {
