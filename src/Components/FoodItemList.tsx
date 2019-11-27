@@ -1,5 +1,6 @@
 import React from "react";
 import { FoodItem } from "../Data";
+import { ListGroup } from 'react-bootstrap';
 
 interface FoodItemListProps {
     items: FoodItem[];
@@ -8,14 +9,14 @@ interface FoodItemListProps {
 
 class FoodItemList extends React.Component<FoodItemListProps> {
     render() {
-        const renderedItems = this.props.items.map(item => 
-            (<li key={item.key} onClick={()=>this.props.onItemSelected(item)}>{item.name}</li>)
+        const renderedItems = this.props.items.map(item =>
+            (<ListGroup.Item key={item.key} action onClick={() => this.props.onItemSelected(item)}>{item.name}</ListGroup.Item>)
         );
 
         return (
-            <ul>
+            <ListGroup variant="flush">
                 {renderedItems}
-            </ul>
+            </ListGroup>
         )
     }
 }
