@@ -5,7 +5,12 @@ import FoodItemList from './Components/FoodItemList';
 import FoodItemDetail from './Components/FoodItemDetail';
 import FoodItemEdit from './Components/FoodItemEdit';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Container , Navbar, Col, Row, Modal } from 'react-bootstrap';
+import { Button, Container, Navbar, Col, Row, Modal } from 'react-bootstrap';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faPlusCircle);
 
 interface AppState {
   items: FoodItem[],
@@ -60,7 +65,7 @@ class App extends React.Component<FirebaseProps, AppState> {
 
   private editItem(item: FoodItem) {
     this.setState({
-      ...this.state, 
+      ...this.state,
       editedItem: item,
       showModal: true
     });
@@ -68,31 +73,32 @@ class App extends React.Component<FirebaseProps, AppState> {
 
   private deleteItem(item: FoodItem) {
     let result = window.confirm(`Do you really want to delete item ${item.name}?`);
-    if(result) {
-      if(this.props.firebase != null) {
+    if (result) {
+      if (this.props.firebase != null) {
         this.props.firebase.removeItem(item.key);
       }
     }
   }
- 
+
   render() {
     return (
       <div className="App">
         <Navbar bg="dark" expand="lg">
           <Navbar.Brand href="#">Grocr</Navbar.Brand>
-          <Navbar.Collapse>
-          <Button onClick={this.createNewItem.bind(this)} variant="outline-success">
-            Add new item
-          </Button>
+          <Navbar.Collapse className="justify-content-end">
+            <Button onClick={this.createNewItem.bind(this)} variant="outline-success">
+              <FontAwesomeIcon icon="plus-circle"/>
+              Add new item
+            </Button>
           </Navbar.Collapse>
         </Navbar>
         <Container fluid>
           <Row>
-            <Col lg={3}>
+            <Col xs={12} lg={3}>
               <FoodItemList items={this.state.items} onItemSelected={item => this.selectItem(item)} />
             </Col>
-            <Col lg={9}>
-              <FoodItemDetail item={this.state.selectedItem} editItemCallback={item => this.editItem(item)} deleteItemCallback={item => this.deleteItem(item) } />
+            <Col xs={12} lg={9}>
+              <FoodItemDetail item={this.state.selectedItem} editItemCallback={item => this.editItem(item)} deleteItemCallback={item => this.deleteItem(item)} />
             </Col>
           </Row>
         </Container>

@@ -22,7 +22,7 @@ class FoodItemDetail extends React.Component<FoodItemDetailProps> {
                         Item detail
                     </h2>
                     <FontAwesomeIcon icon="edit" onClick={() => this.props.item && this.props.editItemCallback(this.props.item)} />
-                        <FontAwesomeIcon icon="trash" onClick={() => this.props.item && this.props.deleteItemCallback(this.props.item)} />
+                    <FontAwesomeIcon icon="trash" onClick={() => this.props.item && this.props.deleteItemCallback(this.props.item)} />
                     <Table striped bordered hover>
                         <tbody>
                             <tr>
