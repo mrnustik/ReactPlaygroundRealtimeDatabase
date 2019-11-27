@@ -1,8 +1,11 @@
 import React from "react";
 import { FoodItem } from "../Data";
+import { Table } from "react-bootstrap";
 
 interface FoodItemDetailProps {
-    item?: FoodItem
+    item?: FoodItem,
+    editItemCallback: ((item: FoodItem) => void);
+    deleteItemCallback: ((item: FoodItem) => void);
 }
 
 class FoodItemDetail extends React.Component<FoodItemDetailProps> {
@@ -10,11 +13,29 @@ class FoodItemDetail extends React.Component<FoodItemDetailProps> {
         if (this.props.item != null) {
             return (
                 <div>
-                    Name: {this.props.item.name} <br />
-                    Added by user: {this.props.item.addedByUser} <br />
-                    Completed <input type="checkbox" 
-                                     checked={this.props.item.completed} 
-                                     readOnly/>
+                    <h2>Item detail</h2>
+                    
+                    <Table striped bordered hover>
+                        <tbody>
+                            <tr>
+                                <td>Name:</td>
+                                <td> {this.props.item.name}</td>
+                            </tr>
+                            <tr>
+                                <td> Added by user</td>
+                                <td>{this.props.item.addedByUser}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Completed</td>
+                                <td>
+                                    <input type="checkbox"
+                                        checked={this.props.item.completed}
+                                        readOnly />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </Table>
                 </div>
             )
         } else {

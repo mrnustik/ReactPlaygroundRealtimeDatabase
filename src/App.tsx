@@ -5,10 +5,7 @@ import FoodItemList from './Components/FoodItemList';
 import FoodItemDetail from './Components/FoodItemDetail';
 import FoodItemEdit from './Components/FoodItemEdit';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from 'react-bootstrap/Navbar';
-import { Col, Row, Modal } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+import { Button, Container , Navbar, Col, Row, Modal } from 'react-bootstrap';
 
 interface AppState {
   items: FoodItem[],
@@ -49,8 +46,7 @@ class App extends React.Component<FirebaseProps, AppState> {
   private selectItem(item: FoodItem) {
     this.setState({
       ...this.state,
-      selectedItem: item,
-      editedItem: item
+      selectedItem: item
     });
   }
 
@@ -62,6 +58,23 @@ class App extends React.Component<FirebaseProps, AppState> {
     });
   }
 
+  private editItem(item: FoodItem) {
+    this.setState({
+      ...this.state, 
+      editedItem: item,
+      showModal: true
+    });
+  }
+
+  private deleteItem(item: FoodItem) {
+    let result = window.confirm(`Do you really want to delete item ${item.name}?`);
+    if(result) {
+      if(this.props.firebase != null) {
+        this.props.firebase.removeItem(item.key);
+      }
+    }
+  }
+ 
   render() {
     return (
       <div className="App">
@@ -77,7 +90,7 @@ class App extends React.Component<FirebaseProps, AppState> {
               <FoodItemList items={this.state.items} onItemSelected={item => this.selectItem(item)} />
             </Col>
             <Col>
-              <FoodItemDetail item={this.state.selectedItem} />
+              <FoodItemDetail item={this.state.selectedItem} editItemCallback={item => this.editItem(item)} deleteItemCallback={item => this.deleteItem(item) } />
             </Col>
           </Row>
         </Container>

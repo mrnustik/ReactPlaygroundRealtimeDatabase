@@ -25,6 +25,10 @@ class Firebase {
         return this.db.ref('grocery-items');
     }
 
+    public removeItem(key: string){
+        this.db.ref(`grocery-items/${key}`).remove();
+    }
+
     public saveOrUpdateItem(key: string, 
         name: string,
         addedByUser: string,
