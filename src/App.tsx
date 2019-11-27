@@ -1,15 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { withFirebase, FirebaseProps } from './Components/FirebaseContext';
 import { FoodItem } from './Data';
 import FoodItemList from './Components/FoodItemList';
 import FoodItemDetail from './Components/FoodItemDetail';
+import FoodItemEdit from './Components/FoodItemEdit';
 
 
 interface AppState {
   items: FoodItem[],
-  selectedItem?: FoodItem
+  selectedItem?: FoodItem,
+  editedItem?: FoodItem
 }
 
 class App extends React.Component<FirebaseProps, AppState> {
@@ -17,8 +18,7 @@ class App extends React.Component<FirebaseProps, AppState> {
   constructor(props: FirebaseProps) {
     super(props);
     this.state = {
-      items: [],
-      selectedItem: undefined
+      items: []
     };
   }
 
@@ -34,7 +34,9 @@ class App extends React.Component<FirebaseProps, AppState> {
         return foodItem;
       });
       this.setState({
-        items: items
+        items: items,
+        selectedItem: undefined,
+        editedItem: undefined
       });
     });
   }
@@ -42,20 +44,26 @@ class App extends React.Component<FirebaseProps, AppState> {
   private selectItem(item: FoodItem) {
     this.setState({
       ...this.state,
-      selectedItem: item
+      selectedItem: item,
+      editedItem: item
+    });
+  }
+
+  private createNewItem() {
+    this.setState({
+      ...this.state,
+      editedItem: undefined
     });
   }
 
   render() {
-    let name = "";
-    for(let food of this.state.items) {
-      name += food.name;
-    }
     return (
       <div className="App">
         <FoodItemList items={this.state.items}
                       onItemSelected={item => this.selectItem(item)}/>
         <FoodItemDetail item={this.state.selectedItem} />
+        <FoodItemEdit editedItem={this.state.editedItem} />
+        <input type="button" onClick={this.createNewItem.bind(this)} value="Craete new item"/>
       </div>
     )
   }

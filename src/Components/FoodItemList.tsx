@@ -9,7 +9,7 @@ interface FoodItemListProps {
 class FoodItemList extends React.Component<FoodItemListProps> {
     render() {
         const renderedItems = this.props.items.map(item => 
-            (<li onClick={()=>this.props.onItemSelected(item)}>{item.name}</li>)
+            (<li key={item.key} onClick={()=>this.props.onItemSelected(item)}>{item.name}</li>)
         );
 
         return (

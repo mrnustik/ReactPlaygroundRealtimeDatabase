@@ -24,6 +24,27 @@ class Firebase {
     public getGroceryItemsReference() {
         return this.db.ref('grocery-items');
     }
+
+    public saveOrUpdateItem(key: string, 
+        name: string,
+        addedByUser: string,
+        completed: boolean) {
+        if(key) {
+            this.db.ref(`grocery-items/${key}`)
+                .set({ 
+                    name: name,
+                    addedByUser: addedByUser,
+                    completed: completed
+                });
+        } else {
+            this.db.ref(`grocery-items/${name}`)
+                .set({ 
+                    name: name,
+                    addedByUser: addedByUser,
+                    completed: completed
+                });
+        }
+    }
 }
 
 export default Firebase;
