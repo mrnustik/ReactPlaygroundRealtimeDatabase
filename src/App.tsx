@@ -9,6 +9,7 @@ import { Button, Container, Navbar, Col, Row, Modal } from 'react-bootstrap';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+const faker = require('faker');
 
 library.add(faPlusCircle);
 
@@ -80,6 +81,15 @@ class App extends React.Component<FirebaseProps, AppState> {
     }
   }
 
+  private addMutltipleItems() {
+    for(let i = 0; i < 10; i++) {
+       const name = faker.name.firstName();
+       const email = faker.internet.email();
+       const completed = false;
+       this.props.firebase && this.props.firebase.saveOrUpdateItem("", name, email, completed);
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -87,8 +97,12 @@ class App extends React.Component<FirebaseProps, AppState> {
           <Navbar.Brand href="#">Grocr</Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
             <Button onClick={this.createNewItem.bind(this)} variant="outline-success">
-              <FontAwesomeIcon icon="plus-circle"/>
+              <FontAwesomeIcon icon="plus-circle" />
               Add new item
+            </Button>
+            <Button onClick={() => this.addMutltipleItems()}>
+              <FontAwesomeIcon icon="plus-circle" />
+              Add 10 fake items
             </Button>
           </Navbar.Collapse>
         </Navbar>
