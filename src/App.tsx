@@ -93,7 +93,7 @@ class App extends React.Component<FirebaseProps, AppState> {
   render() {
     return (
       <div className="App">
-        <Navbar bg="dark" expand="lg">
+        <Navbar bg="dark" expand="lg" variant="dark">
           <Navbar.Brand href="#">Grocr</Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
             <Button onClick={this.createNewItem.bind(this)} variant="outline-success">

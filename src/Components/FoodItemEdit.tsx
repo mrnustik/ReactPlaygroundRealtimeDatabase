@@ -47,6 +47,11 @@ class FoodItemEdit extends React.Component<FoodItemEditProps, FoodItemEditState>
     }
 
     private saveItem() {
+        if(this.state.editedItem.name.length == 0) 
+        {
+            alert ("Missing name. Enter name of the item.");
+            return;
+        }
         if(this.props.firebase != null) {
             this.props.firebase.saveOrUpdateItem(this.state.editedItem.key,
                 this.state.editedItem.name,
