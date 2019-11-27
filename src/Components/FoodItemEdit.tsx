@@ -1,6 +1,7 @@
 import React from "react";
 import { FoodItem } from "../Data";
 import { FirebaseProps, withFirebase } from "./FirebaseContext";
+import { Form, Button } from "react-bootstrap";
 
 interface FoodItemEditProps extends FirebaseProps {
     editedItem?: FoodItem;
@@ -85,18 +86,20 @@ class FoodItemEdit extends React.Component<FoodItemEditProps, FoodItemEditState>
     }
 
     render() {
-        return (<div>
-            <form>
-                <div>
-                    <label htmlFor="nameInput">Name: </label>
-                    <input id ="nameInput" type="text" value={this.state.editedItem.name} onChange={this.nameChanged.bind(this)}/> 
-                </div>
-                <div>
-                    <label htmlFor="completedCheckbox">Completed: </label>
-                    <input id="completedCheckbox" type="checkbox" checked={this.state.editedItem.completed} onChange={this.completedChanged.bind(this)}/> <br/>
-                </div>
-                <input type="button" onClick={this.saveItem.bind(this)} value="Save"/>
-            </form>
+        return (
+        <div>
+            <Form>
+                <Form.Group controlId="nameInput">
+                    <Form.Label>Name: </Form.Label>
+                    <Form.Control type="text" placeholder="Item name" value={this.state.editedItem.name} onChange={this.nameChanged.bind(this)}/> 
+                </Form.Group>
+                <Form.Group controlId="completedChecbkox">
+                    <Form.Check label="Completed" type="checkbox" checked={this.state.editedItem.completed} onChange={this.completedChanged.bind(this)}/>
+                </Form.Group>
+                <Button variant="primary" onClick={this.saveItem.bind(this)}>
+                    Save
+                </Button>
+            </Form>
         </div>)
     }
 }
