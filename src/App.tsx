@@ -80,16 +80,18 @@ class App extends React.Component<FirebaseProps, AppState> {
       <div className="App">
         <Navbar bg="dark" expand="lg">
           <Navbar.Brand href="#">Grocr</Navbar.Brand>
+          <Navbar.Collapse>
           <Button onClick={this.createNewItem.bind(this)} variant="outline-success">
             Add new item
           </Button>
+          </Navbar.Collapse>
         </Navbar>
         <Container fluid>
           <Row>
-            <Col>
+            <Col lg={3}>
               <FoodItemList items={this.state.items} onItemSelected={item => this.selectItem(item)} />
             </Col>
-            <Col>
+            <Col lg={9}>
               <FoodItemDetail item={this.state.selectedItem} editItemCallback={item => this.editItem(item)} deleteItemCallback={item => this.deleteItem(item) } />
             </Col>
           </Row>

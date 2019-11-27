@@ -1,6 +1,11 @@
 import React from "react";
 import { FoodItem } from "../Data";
 import { Table } from "react-bootstrap";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faTrash, faEdit);
 
 interface FoodItemDetailProps {
     item?: FoodItem,
@@ -13,8 +18,11 @@ class FoodItemDetail extends React.Component<FoodItemDetailProps> {
         if (this.props.item != null) {
             return (
                 <div>
-                    <h2>Item detail</h2>
-                    
+                    <h2>
+                        Item detail
+                    </h2>
+                    <FontAwesomeIcon icon="edit" onClick={() => this.props.item && this.props.editItemCallback(this.props.item)} />
+                        <FontAwesomeIcon icon="trash" onClick={() => this.props.item && this.props.deleteItemCallback(this.props.item)} />
                     <Table striped bordered hover>
                         <tbody>
                             <tr>
