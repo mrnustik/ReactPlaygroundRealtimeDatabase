@@ -107,7 +107,7 @@ class App extends React.Component<FirebaseProps, AppState> {
                         </Button>
                     </Navbar.Collapse>
                 </Navbar>
-                <Container fluid>
+                <Container fluid className="app-container">
                     <Row>
                         <Col xs={12} lg={3}>
                             <FoodItemList items={this.state.items} onItemSelected={item => this.selectItem(item)}/>
