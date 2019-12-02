@@ -15,7 +15,7 @@ class Firebase {
     db: app.database.Database;
 
     constructor() {
-        if(app.apps.length == 0)
+        if (app.apps.length === 0)
             app.initializeApp(config);
 
         this.db = app.database();
@@ -25,24 +25,24 @@ class Firebase {
         return this.db.ref('grocery-items');
     }
 
-    public removeItem(key: string){
+    public removeItem(key: string) {
         this.db.ref(`grocery-items/${key}`).remove();
     }
 
-    public saveOrUpdateItem(key: string, 
-        name: string,
-        addedByUser: string,
-        completed: boolean) {
-        if(key) {
+    public saveOrUpdateItem(key: string,
+                            name: string,
+                            addedByUser: string,
+                            completed: boolean) {
+        if (key) {
             this.db.ref(`grocery-items/${key}`)
-                .set({ 
+                .set({
                     name: name,
                     addedByUser: addedByUser,
                     completed: completed
                 });
         } else {
             this.db.ref(`grocery-items/${name}`)
-                .set({ 
+                .set({
                     name: name,
                     addedByUser: addedByUser,
                     completed: completed
