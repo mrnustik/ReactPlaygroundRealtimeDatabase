@@ -109,10 +109,10 @@ class App extends React.Component<FirebaseProps, AppState> {
                 </Navbar>
                 <Container fluid className="app-container">
                     <Row>
-                        <Col xs={12} lg={3}>
+                        <Col xs={12} sm={3}>
                             <FoodItemList items={this.state.items} onItemSelected={item => this.selectItem(item)}/>
                         </Col>
-                        <Col xs={12} lg={9}>
+                        <Col xs={12} sm={9}>
                             <FoodItemDetail item={this.state.selectedItem}
                                             editItemCallback={item => this.editItem(item)}
                                             deleteItemCallback={item => this.deleteItem(item)}/>
