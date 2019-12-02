@@ -1,6 +1,6 @@
 .item-list {
-  max-height: 100vh;
-  overflow: scroll;
+  max-height: 90vh;
+  overflow: auto;
 }
 
 .btn {
