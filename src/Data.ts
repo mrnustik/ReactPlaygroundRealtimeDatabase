@@ -1,5 +1,5 @@
 export interface FoodItem {
-    key: string,
+    id: string,
     name: string,
     addedByUser: string,
     completed: boolean

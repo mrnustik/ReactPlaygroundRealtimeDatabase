@@ -5,6 +5,7 @@ import {Form, Button} from "react-bootstrap";
 
 interface FoodItemEditProps extends FirebaseProps {
     editedItem?: FoodItem;
+    onFinished: () => void;
 }
 
 interface FoodItemEditState {
@@ -15,13 +16,13 @@ class FoodItemEdit extends React.Component<FoodItemEditProps, FoodItemEditState>
 
     static getDerivedStateFromProps(props: FoodItemEditProps, current_state: FoodItemEditState) {
         if (props.editedItem) {
-            if (props.editedItem.key === current_state.editedItem.key)
+            if (props.editedItem.id === current_state.editedItem.id)
                 return current_state;
             else
                 return {
                     editedItem: props.editedItem
                 };
-        } else if (current_state.editedItem.key !== "") {
+        } else if (current_state.editedItem.id !== "") {
             return {
                 editedItem: {
                     key: "",
@@ -38,7 +39,7 @@ class FoodItemEdit extends React.Component<FoodItemEditProps, FoodItemEditState>
         super(props);
         this.state = {
             editedItem: {
-                key: "",
+                id: "",
                 name: "",
                 addedByUser: "react@app.js",
                 completed: false
@@ -52,18 +53,19 @@ class FoodItemEdit extends React.Component<FoodItemEditProps, FoodItemEditState>
             return;
         }
         if (this.props.firebase != null) {
-            this.props.firebase.saveOrUpdateItem(this.state.editedItem.key,
+            this.props.firebase.saveOrUpdateItem(this.state.editedItem.id,
                 this.state.editedItem.name,
                 this.state.editedItem.addedByUser,
                 this.state.editedItem.completed);
             this.resetEditedItem();
+            this.props.onFinished();
         }
     }
 
     private resetEditedItem() {
         this.setState({
             editedItem: {
-                key: "",
+                id: "",
                 name: "",
                 addedByUser: "react@app.js",
                 completed: false

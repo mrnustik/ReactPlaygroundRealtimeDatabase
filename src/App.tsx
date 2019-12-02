@@ -15,7 +15,6 @@ const faker = require('faker');
 library.add(faPlusCircle);
 
 interface AppState {
-    items: FoodItem[],
     selectedItem?: FoodItem,
     editedItem?: FoodItem,
     showModal: boolean
@@ -26,34 +25,15 @@ class App extends React.Component<FirebaseProps, AppState> {
     constructor(props: FirebaseProps) {
         super(props);
         this.state = {
-            items: [],
             showModal: false
         };
     }
 
-    componentDidMount() {
-        if (this.props.firebase == null) return;
-        this.props.firebase.getGroceryItemsReference().on('value', (snapshot) => {
-            let value = snapshot.val();
-            let items = Object.keys(value).map(key => {
-                let foodItem: FoodItem = {
-                    key: key,
-                    ...value[key]
-                };
-                return foodItem;
-            });
-            this.setState({
-                items: items,
-                selectedItem: undefined,
-                editedItem: undefined
-            });
-        });
-    }
-
     private selectItem(item: FoodItem) {
+        const clone = Object.assign({}, item);
         this.setState({
             ...this.state,
-            selectedItem: item
+            selectedItem: clone
         });
     }
 
@@ -66,9 +46,10 @@ class App extends React.Component<FirebaseProps, AppState> {
     }
 
     private editItem(item: FoodItem) {
+        const clone = Object.assign({}, item);
         this.setState({
             ...this.state,
-            editedItem: item,
+            editedItem: clone,
             showModal: true
         });
     }
@@ -77,7 +58,7 @@ class App extends React.Component<FirebaseProps, AppState> {
         let result = window.confirm(`Do you really want to delete item ${item.name}?`);
         if (result) {
             if (this.props.firebase != null) {
-                this.props.firebase.removeItem(item.key);
+                this.props.firebase.removeItem(item.id);
             }
         }
     }
@@ -92,6 +73,8 @@ class App extends React.Component<FirebaseProps, AppState> {
     }
 
     render() {
+        let date = new Date();
+        let timestamp = date.getTime();
         return (
             <div className="App">
                 <Navbar bg="dark" expand="lg" variant="dark">
@@ -110,7 +93,7 @@ class App extends React.Component<FirebaseProps, AppState> {
                 <Container fluid className="app-container">
                     <Row>
                         <Col xs={12} sm={3}>
-                            <FoodItemList items={this.state.items} onItemSelected={item => this.selectItem(item)}/>
+                            <FoodItemList key={timestamp} firebase={this.props.firebase} onItemSelected={item => this.selectItem(item)}/>
                         </Col>
                         <Col xs={12} sm={9}>
                             <FoodItemDetail item={this.state.selectedItem}
@@ -124,7 +107,8 @@ class App extends React.Component<FirebaseProps, AppState> {
                         <Modal.Title>Edit item</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <FoodItemEdit editedItem={this.state.editedItem}/>
+                        <FoodItemEdit editedItem={this.state.editedItem}
+                                      onFinished={() => this.setState({...this.state, showModal: false})} />
                     </Modal.Body>
                 </Modal>
             </div>
