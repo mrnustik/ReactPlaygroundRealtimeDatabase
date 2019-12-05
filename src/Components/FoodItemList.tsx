@@ -24,6 +24,7 @@ class FoodItemList extends React.Component<FoodItemListProps, FoodItemListState>
     componentDidMount(): void {
         this.props.firebase && this.props.firebase.getGroceryItemsReference().on('value', (snapshot) => {
             const value = snapshot.val();
+            if(!value) return;
             const items = Object.keys(value).map(key => {
                 let foodItem: FoodItem = {
                     id: key,

@@ -5,7 +5,7 @@ import FoodItemList from './Components/FoodItemList';
 import FoodItemDetail from './Components/FoodItemDetail';
 import FoodItemEdit from './Components/FoodItemEdit';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button, Container, Navbar, Col, Row, Modal} from 'react-bootstrap';
+import {Button, Container, Navbar, Col, Row, Modal, Form} from 'react-bootstrap';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlusCircle} from '@fortawesome/free-solid-svg-icons';
@@ -77,9 +77,9 @@ class App extends React.Component<FirebaseProps, AppState> {
         let timestamp = date.getTime();
         return (
             <div className="App">
-                <Navbar bg="dark" expand="lg" variant="dark">
+                <Navbar bg="dark" expand={false} variant="dark">
                     <Navbar.Brand href="#">Grocr</Navbar.Brand>
-                    <Navbar.Collapse className="justify-content-end">
+                    <Form>
                         <Button onClick={this.createNewItem.bind(this)} variant="outline-success">
                             <FontAwesomeIcon icon="plus-circle"/>
                             Add new item
@@ -88,7 +88,7 @@ class App extends React.Component<FirebaseProps, AppState> {
                             <FontAwesomeIcon icon="plus-circle"/>
                             Add 10 fake items
                         </Button>
-                    </Navbar.Collapse>
+                    </Form>
                 </Navbar>
                 <Container fluid className="app-container">
                     <Row>
